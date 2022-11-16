@@ -30,7 +30,7 @@ public class AccountController {
     public ResponseEntity<String> save(@Valid @RequestBody AccountModel accountModel) throws JSONException {
         try {
             accountHandler.save(accountModel);
-            return new ResponseEntity<>("Account created", HttpStatus.OK);
+            return new ResponseEntity<>("Account Created", HttpStatus.OK);
         } catch (DuplicateUserName e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 
@@ -40,12 +40,12 @@ public class AccountController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "Update account information", response = Iterable.class)
-    public HttpStatus update(@PathVariable String id, @Valid @RequestBody AccountModel accountModel) {
+    public ResponseEntity<String> update(@PathVariable String id, @Valid @RequestBody AccountModel accountModel) {
         try {
             accountHandler.updateAccountRegistration(id, accountModel);
-            return HttpStatus.OK;
+            return new ResponseEntity<>("Account Updated Successfully", HttpStatus.OK);
         } catch (Exception e) {
-            return HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
